@@ -48,8 +48,8 @@ RUN apt-get -q update                  \
 RUN npm install npm@6.13.1 -g
 
 # Install web-ui for aptly
-
-RUN git clone https://github.com/opensourcer2/aptly-web-ui.git /tmp/
+RUN mkdir -p /tmp/aptly-web-ui
+RUN git clone https://github.com/opensourcer2/aptly-web-ui.git /tmp/aptly-web-ui
 RUN cd /tmp/aptly-web-ui && npm install && ./deploy.sh && tar -xvzf aptly-web-ui.tar.gz /opt/aptly/public
 
 # Install Aptly Configuration
