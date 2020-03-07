@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM debian:jessie
+FROM debian:10
 
 MAINTAINER bryan@turbojets.net
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV DIST=debian
-ENV RELEASE=jessie
+ENV RELEASE=buster
 
 # Add Aptly repository
 RUN echo "deb http://repo.aptly.info/ squeeze main" > /etc/apt/sources.list.d/aptly.list
@@ -44,11 +44,11 @@ RUN apt-get -q update                  \
                        curl            \
                        git             \
                        npm             \
-                       node
+                       nodejs
                        
 # Install web-ui for aptly
 
-RUN git clone git@github.com:sdumetz/aptly-web-ui.git /tmp/
+RUN git clone https://github.com/opensourcer2/aptly-web-ui.git /tmp/
 RUN cd /tmp/aptly-web-ui && npm install && ./deploy.sh && tar -xvzf aptly-web-ui.tar.gz /opt/aptly/public
 
 # Install Aptly Configuration
