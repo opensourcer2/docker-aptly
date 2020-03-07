@@ -41,7 +41,15 @@ RUN apt-get -q update                  \
                        nginx           \
                        wget            \
                        xz-utils        \
-                       curl
+                       curl            \
+                       git             \
+                       npm             \
+                       node
+                       
+# Install web-ui for aptly
+
+git clone git@github.com:sdumetz/aptly-web-ui.git /tmp/
+cd /tmp/aptly-web-ui && npm install && ./deploy.sh && tar -xvzf aptly-web-ui.tar.gz /opt/aptly/public
 
 # Install Aptly Configuration
 COPY assets/aptly.conf /etc/aptly.conf
