@@ -57,15 +57,16 @@ RUN cd /tmp/aptly-web-ui && npm install && ./deploy.sh && tar -xvzf aptly-web-ui
 COPY assets/aptly.conf /etc/aptly.conf
 
 # Enable Aptly Bash completions
-RUN wget https://github.com/smira/aptly/raw/master/bash_completion.d/aptly \
-  -O /etc/bash_completion.d/aptly \
-  && echo "if ! shopt -oq posix; then\n\
-  if [ -f /usr/share/bash-completion/bash_completion ]; then\n\
-    . /usr/share/bash-completion/bash_completion\n\
-  elif [ -f /etc/bash_completion ]; then\n\
-    . /etc/bash_completion\n\
-  fi\n\
-fi" >> /etc/bash.bashrc
+RUN mkdir -p /tmp/aptly-fork
+RUN git clone https://github.com/opensourcer2/aptly-fork.git /tmp/aptly-fork
+RUN cd /tmp/aptly-fork && git checkout tags/v1.1.0 && cp bash_completion.d/aptly /etc/bash_completion.d/aptly
+RUN echo "if ! shopt -oq posix; then\n\
+    if [ -f /usr/share/bash-completion/bash_completion ]; then\n\
+      . /usr/share/bash-completion/bash_completion\n\
+    elif [ -f /etc/bash_completion ]; then\n\
+      . /etc/bash_completion\n\
+    fi\n\
+  fi" >> /etc/bash.bashrc
 
 # Install Nginx Config
 COPY assets/nginx.conf.sh /opt/nginx.conf.sh
