@@ -9,7 +9,7 @@ server {
   autoindex off;
 
   location / {
-    try_files $uri $uri/;
+    try_files \$uri \$uri/;
     deny all;
   }  
   location /ui/ {
